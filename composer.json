@@ -1,0 +1,13 @@
+{
+    "name": "jaredchu/simple-cache",
+    "description": "Simple PHP object caching base on temp file",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jared Chu",
+            "email": "me@jaredchu.com"
+        }
+    ],
+    "require": {}
+}
