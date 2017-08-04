@@ -47,6 +47,8 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
         self::assertEquals(self::$person->name, $jared->name);
         self::assertEquals(self::$person->age, $jared->age);
         self::assertEquals(self::$person->sayHi(), $jared->sayHi());
+
+        self::assertFalse(SimpleCache::fetch('xxx', Person::class));
     }
 
     public function testRemove()
@@ -54,12 +56,33 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
         self::assertTrue(SimpleCache::remove(self::$key));
         self::assertFalse(SimpleCache::exists(self::$key));
     }
+
+    public function testLoop()
+    {
+        $i = 0;
+        while ($i++ < 100) {
+            $newKey = 'key' . $i;
+            $newPerson = new Person(md5($i), $i);
+            $newPerson->des = hash('sha512', $newPerson->name);
+
+            self::assertTrue(SimpleCache::add($newKey, $newPerson));
+            self::assertTrue(SimpleCache::exists($newKey));
+
+            $fetchPerson = SimpleCache::fetch($newKey, Person::class);
+            self::assertEquals($newPerson->name, $fetchPerson->name);
+            self::assertEquals($newPerson->age, $fetchPerson->age);
+            self::assertEquals($newPerson->sayHi(), $fetchPerson->sayHi());
+
+            self::assertTrue(SimpleCache::remove($newKey));
+        }
+    }
 }
 
 class Person
 {
     public $name;
     public $age;
+    public $des = '';
 
     /**
      * Person constructor.
