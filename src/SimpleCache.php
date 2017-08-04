@@ -11,6 +11,10 @@ namespace JC;
 use JsonMapper;
 use ReflectionClass;
 
+/**
+ * Class SimpleCache
+ * @package JC
+ */
 class SimpleCache
 {
 
@@ -18,8 +22,10 @@ class SimpleCache
      * @param $key
      * @param $data
      * @return bool
+     *
+     * Add object to cache list and save object as json file
      */
-    public static function add($key, $data)
+    public static function add($key, $data, $ttl = 0)
     {
         $tempFilePath = static::getTempFile($key) ?: static::createTempFile($key);
         return (bool)file_put_contents($tempFilePath, json_encode($data));
@@ -29,6 +35,8 @@ class SimpleCache
      * @param $key
      * @param string $className
      * @return object|bool
+     *
+     * Fetch object from cache
      */
     public static function fetch($key, $className)
     {
@@ -42,6 +50,12 @@ class SimpleCache
         return false;
     }
 
+    /**
+     * @param $key
+     * @return bool
+     *
+     * Remove object from cache
+     */
     public static function remove($key)
     {
         if (CacheManager::has($key)) {
@@ -55,12 +69,18 @@ class SimpleCache
     /**
      * @param $key
      * @return bool
+     *
+     * Check object is cached or not
      */
     public static function exists($key)
     {
         return file_exists(static::getTempFile($key));
     }
 
+    /**
+     * @param $key
+     * @return bool|string
+     */
     public static function getTempFile($key)
     {
         if (CacheManager::has($key)) {
@@ -70,6 +90,10 @@ class SimpleCache
         return false;
     }
 
+    /**
+     * @param $key
+     * @return bool|string
+     */
     public static function createTempFile($key)
     {
         $tempFilePath = tempnam(sys_get_temp_dir(), $key);

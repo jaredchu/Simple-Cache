@@ -68,6 +68,8 @@ class CacheManager
      * @param $key
      * @param $filePath
      * @return bool
+     *
+     * Save $key and $filePath in cacheList
      */
     public static function set($key, $filePath)
     {
@@ -80,6 +82,8 @@ class CacheManager
     /**
      * @param $key
      * @return bool
+     *
+     * Remove caching object file and remove from cache list
      */
     public static function remove($key)
     {
@@ -101,6 +105,8 @@ class CacheManager
 
     /**
      * @return array
+     *
+     * Return cache list in array
      */
     protected static function getCacheList()
     {
