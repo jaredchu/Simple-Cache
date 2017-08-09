@@ -57,8 +57,13 @@ class CacheManager
     public static function get($key)
     {
         $cacheList = static::getCacheList();
-        if (isset($cacheList[$key]) && ($cacheList[$key][0] == 0 || $cacheList[$key][0] >= time())) {
-            return $cacheList[$key][1];
+        if (isset($cacheList[$key])) {
+            if (($cacheList[$key][0] == 0 || $cacheList[$key][0] >= time())) {
+                return $cacheList[$key][1];
+            } else {
+                unlink($cacheList[$key][1]);
+                static::remove($key);
+            }
         }
 
         return false;
