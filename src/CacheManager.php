@@ -57,8 +57,8 @@ class CacheManager
     public static function get($key)
     {
         $cacheList = static::getCacheList();
-        if (isset($cacheList[$key])) {
-            return $cacheList[$key];
+        if (isset($cacheList[$key]) && ($cacheList[$key][0] == 0 || $cacheList[$key][0] >= time())) {
+            return $cacheList[$key][1];
         }
 
         return false;
@@ -71,10 +71,14 @@ class CacheManager
      *
      * Save $key and $filePath in cacheList
      */
-    public static function set($key, $filePath)
+    public static function set($key, $filePath, $ttl)
     {
         $cacheList = static::getCacheList();
-        $cacheList[$key] = $filePath;
+
+        if ($ttl != 0) {
+            $ttl += time();
+        }
+        $cacheList[$key] = [$ttl, $filePath];
 
         return static::setCacheList($cacheList);
     }

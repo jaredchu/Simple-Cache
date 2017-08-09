@@ -25,7 +25,7 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
 
     public function testCreateTempFile()
     {
-        self::assertTrue(is_string(SimpleCache::createTempFile(self::$key)));
+        self::assertTrue(is_string(SimpleCache::createTempFile(self::$key, 0)));
     }
 
     public function testGetTempFile()
@@ -77,7 +77,7 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
             $newPerson = new Person(md5($i), $i);
             $newPerson->des = hash('sha512', $newPerson->name);
 
-            self::assertTrue(SimpleCache::add($newKey, $newPerson));
+            self::assertTrue(SimpleCache::add($newKey, $newPerson, rand(10, 100)));
             self::assertTrue(SimpleCache::exists($newKey));
 
             $fetchPerson = SimpleCache::fetch($newKey, Person::class);
@@ -87,6 +87,15 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
 
             self::assertTrue(SimpleCache::remove($newKey));
         }
+    }
+
+    public function testTTL()
+    {
+        $ttlKey = 'ttlKey';
+        SimpleCache::add($ttlKey, new stdClass(), 1);
+        sleep(2);
+
+        self::assertFalse(SimpleCache::exists($ttlKey));
     }
 }
 

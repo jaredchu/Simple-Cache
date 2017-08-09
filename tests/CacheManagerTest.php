@@ -16,6 +16,7 @@ class CacheManagerTest extends PHPUnit_Framework_TestCase
         $cacheFileName = 'custom-cache-file-name';
         CacheManager::setCFileName($cacheFileName);
         SimpleCache::add('test', new stdClass());
+        SimpleCache::remove('test');
 
         self::assertTrue(file_exists(CacheManager::getCFilePath()));
     }

@@ -27,7 +27,7 @@ class SimpleCache
      */
     public static function add($key, $data, $ttl = 0)
     {
-        $tempFilePath = static::getTempFile($key) ?: static::createTempFile($key);
+        $tempFilePath = static::getTempFile($key) ?: static::createTempFile($key, $ttl);
         return (bool)file_put_contents($tempFilePath, json_encode($data));
     }
 
@@ -94,10 +94,10 @@ class SimpleCache
      * @param $key
      * @return bool|string
      */
-    public static function createTempFile($key)
+    public static function createTempFile($key, $ttl)
     {
         $tempFilePath = tempnam(sys_get_temp_dir(), $key);
-        CacheManager::set($key, $tempFilePath);
+        CacheManager::set($key, $tempFilePath, $ttl);
 
         return $tempFilePath;
     }
