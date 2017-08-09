@@ -65,6 +65,8 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
     {
         self::assertTrue(SimpleCache::remove(self::$key));
         self::assertFalse(SimpleCache::exists(self::$key));
+
+        self::assertFalse(SimpleCache::remove('xxx'));
     }
 
     public function testLoop()
