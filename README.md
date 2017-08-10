@@ -19,7 +19,6 @@ Simple PHP object caching base on temp file
 SimpleCache::add('your-key', new Person('Jared', 27),1000);
 
 // cache object Person and encrypt the data
-EncryptCache::setEncryptKey('secret');
 EncryptCache::add('your-key', new Person('Jared', 27));
 ```
 #### Fetch
@@ -30,7 +29,6 @@ if(SimpleCache::exists('your-key')){
 }
 
 // fetch data from enscrypt cache
-EncryptCache::setEncryptKey('secret');
 if(EncryptCache::exists('your-key')){
   $person = EncryptCache::fetch('your-key', Person::class);
   $person->sayHi();
