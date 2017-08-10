@@ -28,7 +28,7 @@ class SimpleCache
     public static function add($key, $data, $ttl = 0)
     {
         $tempFilePath = static::getTempFile($key) ?: static::createTempFile($key, $ttl);
-        return (bool)file_put_contents($tempFilePath, json_encode($data));
+        return (bool)file_put_contents($tempFilePath, static::encode($data));
     }
 
     /**
@@ -41,10 +41,10 @@ class SimpleCache
     public static function fetch($key, $className)
     {
         if (CacheManager::has($key)) {
-            $jsonString = file_get_contents(static::getTempFile($key));
+            $dataString = file_get_contents(static::getTempFile($key));
 
             $mapper = new JsonMapper();
-            return $mapper->map(json_decode($jsonString), (new ReflectionClass($className))->newInstanceWithoutConstructor());
+            return $mapper->map(static::decode($dataString), (new ReflectionClass($className))->newInstanceWithoutConstructor());
         }
 
         return false;
@@ -100,5 +100,23 @@ class SimpleCache
         CacheManager::set($key, $tempFilePath, $ttl);
 
         return $tempFilePath;
+    }
+
+    /**
+     * @param object $object
+     * @return string
+     */
+    protected static function encode($object)
+    {
+        return json_encode($object);
+    }
+
+    /**
+     * @param string $string
+     * @return object
+     */
+    protected static function decode($string)
+    {
+        return json_decode($string);
     }
 }
