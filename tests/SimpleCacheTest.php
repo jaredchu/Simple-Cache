@@ -6,6 +6,7 @@
  * Time: 10:56
  */
 
+use JC\CacheManager;
 use JC\SimpleCache;
 
 class SimpleCacheTest extends PHPUnit_Framework_TestCase
@@ -21,6 +22,7 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
     {
         self::$key = 'mr.chu';
         self::$person = new Person('Jared', 27);
+        CacheManager::setCFileName('jc-simple-cache-list');
     }
 
     public function testCreateTempFile()
@@ -109,6 +111,8 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
         self::assertEquals($employee->person->name, $fetchEmployee->person->name);
         self::assertEquals($employee->person->age, $fetchEmployee->person->age);
         self::assertEquals($employee->person->sayHi(), $fetchEmployee->person->sayHi());
+
+        self::assertTrue(SimpleCache::remove($eKey));
     }
 }
 

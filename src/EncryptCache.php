@@ -14,22 +14,14 @@ namespace JC;
  */
 class EncryptCache extends SimpleCache
 {
-    /**
-     *
-     */
-    const ENCRYPT_METHOD = 'AES256';
-
-    /**
-     * @var string
-     */
-    public static $encryptKey;
+    const MANAGER = EncryptManager::class;
 
     /**
      * @return string
      */
     public static function getEncryptKey()
     {
-        return self::$encryptKey;
+        return (self::MANAGER)::getEncryptKey();
     }
 
     /**
@@ -37,7 +29,7 @@ class EncryptCache extends SimpleCache
      */
     public static function setEncryptKey($encryptKey)
     {
-        self::$encryptKey = $encryptKey;
+        (self::MANAGER)::setEncryptKey($encryptKey);
     }
 
     /**
@@ -46,7 +38,7 @@ class EncryptCache extends SimpleCache
      */
     protected static function encode($object)
     {
-        return openssl_encrypt(json_encode($object), self::ENCRYPT_METHOD, self::getEncryptKey(), 0, self::getIv());
+        return (self::MANAGER)::encrypt(json_encode($object));
     }
 
     /**
@@ -55,15 +47,6 @@ class EncryptCache extends SimpleCache
      */
     protected static function decode($string)
     {
-        return json_decode(openssl_decrypt($string, self::ENCRYPT_METHOD, self::getEncryptKey(), 0, self::getIv()));
+        return json_decode((self::MANAGER)::decrypt($string));
     }
-
-    /**
-     * @return bool|string
-     */
-    protected static function getIv()
-    {
-        return substr(md5(self::getEncryptKey()), 0, 16);
-    }
-
 }

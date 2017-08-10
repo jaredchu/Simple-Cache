@@ -8,7 +8,6 @@
 
 namespace JC;
 
-use JC\JCMapper;
 use ReflectionClass;
 
 /**
@@ -17,6 +16,11 @@ use ReflectionClass;
  */
 class SimpleCache
 {
+
+    /**
+     * @var CacheManager
+     */
+    const MANAGER = CacheManager::class;
 
     /**
      * @param $key
@@ -40,7 +44,7 @@ class SimpleCache
      */
     public static function fetch($key, $className)
     {
-        if (CacheManager::has($key)) {
+        if ((static::MANAGER)::has($key)) {
             $dataString = file_get_contents(static::getTempFile($key));
 
             $mapper = new JCMapper();
@@ -58,9 +62,9 @@ class SimpleCache
      */
     public static function remove($key)
     {
-        if (CacheManager::has($key)) {
-            unlink(CacheManager::get($key));
-            return CacheManager::remove($key);
+        if ((static::MANAGER)::has($key)) {
+            unlink((static::MANAGER)::get($key));
+            return (static::MANAGER)::remove($key);
         }
 
         return false;
@@ -83,8 +87,8 @@ class SimpleCache
      */
     public static function getTempFile($key)
     {
-        if (CacheManager::has($key)) {
-            return CacheManager::get($key);
+        if ((static::MANAGER)::has($key)) {
+            return (static::MANAGER)::get($key);
         }
 
         return false;
@@ -97,7 +101,7 @@ class SimpleCache
     public static function createTempFile($key, $ttl)
     {
         $tempFilePath = tempnam(sys_get_temp_dir(), $key);
-        CacheManager::set($key, $tempFilePath, $ttl);
+        (static::MANAGER)::set($key, $tempFilePath, $ttl);
 
         return $tempFilePath;
     }

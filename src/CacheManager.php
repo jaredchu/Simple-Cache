@@ -120,7 +120,7 @@ class CacheManager
     protected static function getCacheList()
     {
         if (file_exists(static::getCFilePath())) {
-            return json_decode(file_get_contents(static::getCFilePath()), true);
+            return static::decode(file_get_contents(static::getCFilePath()));
         }
 
         return array();
@@ -132,6 +132,24 @@ class CacheManager
      */
     protected static function setCacheList($cacheList)
     {
-        return (bool)file_put_contents(static::getCFilePath(), json_encode($cacheList));
+        return (bool)file_put_contents(static::getCFilePath(), static::encode($cacheList));
+    }
+
+    /**
+     * @param $array
+     * @return string
+     */
+    protected static function encode($array)
+    {
+        return json_encode($array);
+    }
+
+    /**
+     * @param $string
+     * @return array
+     */
+    protected static function decode($string)
+    {
+        return json_decode($string, true);
     }
 }
