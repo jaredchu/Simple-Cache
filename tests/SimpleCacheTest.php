@@ -97,6 +97,19 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
 
         self::assertFalse(SimpleCache::exists($ttlKey));
     }
+
+    public function testFCetchomplexObject()
+    {
+        $eKey = 'employee';
+        $employee = new Employee(self::$person);
+
+        self::assertTrue(SimpleCache::add($eKey, $employee));
+        $fetchEmployee = SimpleCache::fetch($eKey, Employee::class);
+
+        self::assertEquals($employee->person->name, $fetchEmployee->person->name);
+        self::assertEquals($employee->person->age, $fetchEmployee->person->age);
+        self::assertEquals($employee->person->sayHi(), $fetchEmployee->person->sayHi());
+    }
 }
 
 class Person
@@ -120,4 +133,22 @@ class Person
     {
         return 'Hi';
     }
+}
+
+class Employee
+{
+    /**
+     * @var Person
+     */
+    public $person;
+
+    /**
+     * Employee constructor.
+     * @param Person $person
+     */
+    public function __construct(Person $person)
+    {
+        $this->person = $person;
+    }
+
 }

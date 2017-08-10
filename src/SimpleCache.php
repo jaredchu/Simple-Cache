@@ -8,7 +8,7 @@
 
 namespace JC;
 
-use JsonMapper;
+use JC\JCMapper;
 use ReflectionClass;
 
 /**
@@ -43,7 +43,7 @@ class SimpleCache
         if (CacheManager::has($key)) {
             $dataString = file_get_contents(static::getTempFile($key));
 
-            $mapper = new JsonMapper();
+            $mapper = new JCMapper();
             return $mapper->map(static::decode($dataString), (new ReflectionClass($className))->newInstanceWithoutConstructor());
         }
 
