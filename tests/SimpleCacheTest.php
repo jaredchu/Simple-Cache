@@ -22,7 +22,6 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
     {
         self::$key = 'mr.chu';
         self::$person = new Person('Jared', 27);
-        CacheManager::setCFileName('jc-simple-cache-list');
     }
 
     public function testCreateTempFile()

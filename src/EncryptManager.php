@@ -24,9 +24,17 @@ class EncryptManager extends CacheManager
     /**
      * @return string
      */
+    public static function getCFileName()
+    {
+        return self::$cFileName ?: self::getUniqueString('encrypt');
+    }
+
+    /**
+     * @return string
+     */
     public static function getEncryptKey()
     {
-        return self::$encryptKey;
+        return self::$encryptKey ?: self::getUniqueString('encryptKey');
     }
 
     /**

@@ -7,7 +7,6 @@
  */
 
 use JC\EncryptCache;
-use JC\EncryptManager;
 
 class EncryptCacheTest extends PHPUnit_Framework_TestCase
 {
@@ -24,7 +23,6 @@ class EncryptCacheTest extends PHPUnit_Framework_TestCase
         self::$encryptKey = '123456';
         self::$key = 'mr.encrypt';
         self::$person = new Person('', 27);
-        EncryptManager::setCFileName('encrypt-file-cache-list');
     }
 
     public function testAdd()

@@ -20,7 +20,7 @@ class CacheManager
     /**
      * @var string
      */
-    public static $cFileName = 'jc-simple-cache-list';
+    public static $cFileName;
 
     /**
      * @param $cFileName
@@ -35,7 +35,7 @@ class CacheManager
      */
     public static function getCFileName()
     {
-        return static::$cFileName;
+        return static::$cFileName ?: static::getUniqueString();
     }
 
     /**
@@ -46,6 +46,21 @@ class CacheManager
     public static function getCFilePath()
     {
         return sys_get_temp_dir() . '/' . static::getCFileName();
+    }
+
+    /**
+     * Unique string for each server
+     * @param string $salt
+     * @return string
+     */
+    public static function getUniqueString($salt = '')
+    {
+        $uniqueString = $_SERVER['PWD'];
+        if (isset($_SERVER['SERVER_SIGNATURE'])) {
+            $uniqueString .= $_SERVER['SERVER_SIGNATURE'];
+        }
+
+        return md5($uniqueString . $salt);
     }
 
     /**

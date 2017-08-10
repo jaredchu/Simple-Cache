@@ -11,12 +11,6 @@ use JC\SimpleCache;
 
 class CacheManagerTest extends PHPUnit_Framework_TestCase
 {
-
-    public static function setUpBeforeClass()
-    {
-        CacheManager::setCFileName('custom-cache-file-name');
-    }
-
     public function testSetCFileName()
     {
         SimpleCache::add('test', new stdClass());
