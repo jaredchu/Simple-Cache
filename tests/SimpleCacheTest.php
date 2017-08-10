@@ -98,7 +98,7 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
         self::assertFalse(SimpleCache::exists($ttlKey));
     }
 
-    public function testFCetchomplexObject()
+    public function testFetchComplexObject()
     {
         $eKey = 'employee';
         $employee = new Employee(self::$person);
