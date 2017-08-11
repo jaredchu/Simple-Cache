@@ -23,4 +23,12 @@ class ManagerTest extends PHPUnit_Framework_TestCase
     {
         self::assertFalse(Manager::get('xxx'));
     }
+
+    public function testUniqueString()
+    {
+        self::assertEquals(Manager::getUniqueString(), Manager::getUniqueString());
+        self::assertNotEquals(Manager::getUniqueString('a'), Manager::getUniqueString());
+        self::assertEquals(Manager::getUniqueString('a'), Manager::getUniqueString('a'));
+        self::assertNotEquals(Manager::getUniqueString('a'), Manager::getUniqueString('b'));
+    }
 }

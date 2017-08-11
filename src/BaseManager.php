@@ -55,7 +55,7 @@ abstract class BaseManager
      */
     public static function getUniqueString($salt = '')
     {
-        $uniqueString = $_SERVER['PWD'];
+        $uniqueString = __DIR__;
         if (isset($_SERVER['SERVER_SIGNATURE'])) {
             $uniqueString .= $_SERVER['SERVER_SIGNATURE'];
         }
