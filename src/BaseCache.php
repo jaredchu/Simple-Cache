@@ -38,7 +38,7 @@ class BaseCache
      */
     public static function fetch($key, $className)
     {
-        if (BaseManager::has($key)) {
+        if (Manager::has($key)) {
             $dataString = file_get_contents(static::getTempFile($key));
 
             $mapper = new JCMapper();
@@ -56,9 +56,9 @@ class BaseCache
      */
     public static function remove($key)
     {
-        if (BaseManager::has($key)) {
-            unlink(BaseManager::get($key));
-            return BaseManager::remove($key);
+        if (Manager::has($key)) {
+            unlink(Manager::get($key));
+            return Manager::remove($key);
         }
 
         return false;
@@ -81,8 +81,8 @@ class BaseCache
      */
     protected static function getTempFile($key)
     {
-        if (BaseManager::has($key)) {
-            return BaseManager::get($key);
+        if (Manager::has($key)) {
+            return Manager::get($key);
         }
 
         return false;
@@ -95,7 +95,7 @@ class BaseCache
     protected static function createTempFile($key, $ttl)
     {
         $tempFilePath = tempnam(sys_get_temp_dir(), $key);
-        BaseManager::set($key, $tempFilePath, $ttl);
+        Manager::set($key, $tempFilePath, $ttl);
 
         return $tempFilePath;
     }

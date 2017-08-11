@@ -6,8 +6,8 @@
  * Time: 14:13
  */
 
-use JC\BaseManager;
 use JC\BaseCache;
+use JC\Manager;
 
 class ManagerTest extends PHPUnit_Framework_TestCase
 {
@@ -16,11 +16,11 @@ class ManagerTest extends PHPUnit_Framework_TestCase
         BaseCache::add('test', new stdClass());
         BaseCache::remove('test');
 
-        self::assertTrue(file_exists(BaseManager::getCFilePath()));
+        self::assertTrue(file_exists(Manager::getCFilePath()));
     }
 
     public function testGet()
     {
-        self::assertFalse(BaseManager::get('xxx'));
+        self::assertFalse(Manager::get('xxx'));
     }
 }

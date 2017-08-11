@@ -26,7 +26,7 @@ class Manager extends BaseManager
      */
     public static function getCFileName()
     {
-        return self::$cFileName ?: self::getUniqueString('encrypt');
+        return self::$cFileName ?: self::getUniqueString(is_null(self::$encryptKey) ? 'encrypt' : self::$encryptKey);
     }
 
     /**
