@@ -48,11 +48,11 @@ SimpleCache::remove('your-key');
 ```
 #### Security
 ```PHP
-// your data is already encrypt but you can set a encrypt key to make sure your it's safe
+// your data is already encrypt but you can set your own encrypt key
 SimpleCache::setEncryptKey('your unique string');
 SimpleCache::add('your-key', new Person('Jared', 27));
 
-// you must set encrypt key again if you call fetch in another session
+// you must set encrypt key again if you want to call fetch in another session
 SimpleCache::setEncryptKey('your unique string');
 $person = SimpleCache::fetch('your-key', Person::class);
 ```
