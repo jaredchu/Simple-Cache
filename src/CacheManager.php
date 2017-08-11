@@ -20,7 +20,7 @@ class CacheManager
     /**
      * @var string
      */
-    public static $cFileName;
+    protected static $cFileName;
 
     /**
      * @param $cFileName

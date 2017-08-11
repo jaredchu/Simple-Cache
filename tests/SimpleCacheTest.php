@@ -24,16 +24,6 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
         self::$person = new Person('Jared', 27);
     }
 
-    public function testCreateTempFile()
-    {
-        self::assertTrue(is_string(SimpleCache::createTempFile(self::$key, 0)));
-    }
-
-    public function testGetTempFile()
-    {
-        self::assertTrue(is_string(SimpleCache::getTempFile(self::$key)));
-    }
-
     public function testAdd()
     {
         self::assertTrue(SimpleCache::add(self::$key, self::$person));

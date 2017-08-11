@@ -85,7 +85,7 @@ class SimpleCache
      * @param $key
      * @return bool|string
      */
-    public static function getTempFile($key)
+    protected static function getTempFile($key)
     {
         if ((static::MANAGER)::has($key)) {
             return (static::MANAGER)::get($key);
@@ -98,7 +98,7 @@ class SimpleCache
      * @param $key
      * @return bool|string
      */
-    public static function createTempFile($key, $ttl)
+    protected static function createTempFile($key, $ttl)
     {
         $tempFilePath = tempnam(sys_get_temp_dir(), $key);
         (static::MANAGER)::set($key, $tempFilePath, $ttl);
