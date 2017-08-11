@@ -2,108 +2,32 @@
 /**
  * Created by PhpStorm.
  * User: jaredchu
- * Date: 03/08/2017
- * Time: 17:17
+ * Date: 09/08/2017
+ * Time: 16:22
  */
 
 namespace JC;
 
-use ReflectionClass;
-
 /**
- * Class SimpleCache
+ * Class EncryptCache
  * @package JC
  */
-class SimpleCache
+class SimpleCache extends BaseCache
 {
-
     /**
-     * @var CacheManager
+     * @return string
      */
-    const MANAGER = CacheManager::class;
-
-    /**
-     * @param $key
-     * @param $data
-     * @return bool
-     *
-     * Add object to cache list and save object as json file
-     */
-    public static function add($key, $data, $ttl = 0)
+    public static function getEncryptKey()
     {
-        $tempFilePath = static::getTempFile($key) ?: static::createTempFile($key, $ttl);
-        return (bool)file_put_contents($tempFilePath, static::encode($data));
+        return Manager::getEncryptKey();
     }
 
     /**
-     * @param $key
-     * @param string $className
-     * @return object|bool
-     *
-     * Fetch object from cache
+     * @param string $encryptKey
      */
-    public static function fetch($key, $className)
+    public static function setEncryptKey($encryptKey)
     {
-        if ((static::MANAGER)::has($key)) {
-            $dataString = file_get_contents(static::getTempFile($key));
-
-            $mapper = new JCMapper();
-            return $mapper->map(static::decode($dataString), (new ReflectionClass($className))->newInstanceWithoutConstructor());
-        }
-
-        return false;
-    }
-
-    /**
-     * @param $key
-     * @return bool
-     *
-     * Remove object from cache
-     */
-    public static function remove($key)
-    {
-        if ((static::MANAGER)::has($key)) {
-            unlink((static::MANAGER)::get($key));
-            return (static::MANAGER)::remove($key);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param $key
-     * @return bool
-     *
-     * Check object is cached or not
-     */
-    public static function exists($key)
-    {
-        return file_exists(static::getTempFile($key));
-    }
-
-    /**
-     * @param $key
-     * @return bool|string
-     */
-    protected static function getTempFile($key)
-    {
-        if ((static::MANAGER)::has($key)) {
-            return (static::MANAGER)::get($key);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param $key
-     * @return bool|string
-     */
-    protected static function createTempFile($key, $ttl)
-    {
-        $tempFilePath = tempnam(sys_get_temp_dir(), $key);
-        (static::MANAGER)::set($key, $tempFilePath, $ttl);
-
-        return $tempFilePath;
+        Manager::setEncryptKey($encryptKey);
     }
 
     /**
@@ -112,7 +36,7 @@ class SimpleCache
      */
     protected static function encode($object)
     {
-        return json_encode($object);
+        return Manager::encrypt(json_encode($object));
     }
 
     /**
@@ -121,6 +45,6 @@ class SimpleCache
      */
     protected static function decode($string)
     {
-        return json_decode($string);
+        return json_decode(Manager::decrypt($string));
     }
 }

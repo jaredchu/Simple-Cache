@@ -9,7 +9,7 @@
 namespace JC;
 
 
-class EncryptManager extends CacheManager
+class Manager extends BaseManager
 {
     /**
      * @var string

@@ -15,7 +15,7 @@ namespace JC;
  * Manage the list of caching file and object
  * Save in $cFilename
  */
-class CacheManager
+class BaseManager
 {
     /**
      * @var string
