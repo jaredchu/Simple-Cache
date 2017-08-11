@@ -15,26 +15,25 @@ Simple PHP object caching base on temp file
 
 #### Quick start
 ```PHP
+use JC\SimpleCache;
+
 // store your object
-EncryptCache::add('your-key', new Person('Jared', 27));
+SimpleCache::add('your-key', new Person('Jared', 27));
 
 // check if exists
-EncryptCache::exists('your-key');
+SimpleCache::exists('your-key');
 
 // fetch your object
-$person = EncryptCache::fetch('your-key', Person::class);
+$person = SimpleCache::fetch('your-key', Person::class);
 
 // remove your cache
-EncryptCache::remove('your-key');
+SimpleCache::remove('your-key');
 ```
 
 #### Add
 ```PHP
 // cache object Person with lifetime 1000 seconds (default is 0, not expire)
-SimpleCache::add('your-key', new Person('Jared', 27),1000);
-
-// cache object Person and encrypt the data
-EncryptCache::add('your-key', new Person('Jared', 27));
+SimpleCache::add('your-key', new Person('Jared', 27), 1000);
 ```
 #### Fetch
 ```PHP
@@ -42,19 +41,20 @@ if(SimpleCache::exists('your-key')){
   $person = SimpleCache::fetch('your-key', Person::class);
   $person->sayHi();
 }
-
-// fetch data from encrypt cache
-if(EncryptCache::exists('your-key')){
-  $person = EncryptCache::fetch('your-key', Person::class);
-  $person->sayHi();
-}
 ```
 #### Remove
 ```PHP
 SimpleCache::remove('your-key');
+```
+#### Security
+```PHP
+// your data is already encrypt but you can set a encrypt key to make sure your it's safe
+SimpleCache::setEncryptKey('your unique string');
+SimpleCache::add('your-key', new Person('Jared', 27));
 
-// the same with
-EncryptCache::remove('your-key');
+// you must set encrypt key again if you call fetch in another session
+SimpleCache::setEncryptKey('your unique string');
+$person = SimpleCache::fetch('your-key', Person::class);
 ```
 
 ## Contributing
