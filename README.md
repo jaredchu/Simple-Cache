@@ -13,6 +13,21 @@ Simple PHP object caching base on temp file
 
 ## Usage
 
+#### Quick start
+```PHP
+// store your object
+EncryptCache::add('your-key', new Person('Jared', 27));
+
+// check if exists
+EncryptCache::exists('your-key');
+
+// fetch your object
+$person = EncryptCache::fetch('your-key', Person::class);
+
+// remove your cache
+EncryptCache::remove('your-key');
+```
+
 #### Add
 ```PHP
 // cache object Person with lifetime 1000 seconds (default is 0, not expire)
@@ -28,7 +43,7 @@ if(SimpleCache::exists('your-key')){
   $person->sayHi();
 }
 
-// fetch data from enscrypt cache
+// fetch data from encrypt cache
 if(EncryptCache::exists('your-key')){
   $person = EncryptCache::fetch('your-key', Person::class);
   $person->sayHi();
@@ -36,7 +51,10 @@ if(EncryptCache::exists('your-key')){
 ```
 #### Remove
 ```PHP
-SimpleCache::remove('your-key')
+SimpleCache::remove('your-key');
+
+// the same with
+EncryptCache::remove('your-key');
 ```
 
 ## Contributing
