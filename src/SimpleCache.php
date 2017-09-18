@@ -6,7 +6,7 @@
  * Time: 16:22
  */
 
-namespace JC;
+namespace JC\Cache;
 
 /**
  * Class EncryptCache

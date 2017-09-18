@@ -6,7 +6,7 @@
  * Time: 11:50
  */
 
-namespace JC;
+namespace JC\Cache;
 
 use JsonMapper;
 

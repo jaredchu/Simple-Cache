@@ -6,7 +6,7 @@
  * Time: 16:00
  */
 
-use JC\SimpleCache;
+use JC\Cache\SimpleCache;
 
 class SimpleCacheTest extends PHPUnit_Framework_TestCase
 {

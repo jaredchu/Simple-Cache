@@ -6,7 +6,7 @@
  * Time: 17:17
  */
 
-namespace JC;
+namespace JC\Cache;
 
 use ReflectionClass;
 

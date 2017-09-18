@@ -6,8 +6,7 @@
  * Time: 10:56
  */
 
-use JC\BaseManager;
-use JC\BaseCache;
+use JC\Cache\BaseCache;
 
 class BaseCacheTest extends PHPUnit_Framework_TestCase
 {

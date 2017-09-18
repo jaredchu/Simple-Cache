@@ -6,8 +6,8 @@
  * Time: 14:13
  */
 
-use JC\BaseCache;
-use JC\Manager;
+use JC\Cache\BaseCache;
+use JC\Cache\Manager;
 
 class ManagerTest extends PHPUnit_Framework_TestCase
 {

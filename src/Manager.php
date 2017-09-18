@@ -6,7 +6,7 @@
  * Time: 15:52
  */
 
-namespace JC;
+namespace JC\Cache;
 
 
 class Manager extends BaseManager

@@ -6,7 +6,7 @@
  * Time: 11:36
  */
 
-namespace JC;
+namespace JC\Cache;
 
 /**
  * Class CacheManager
