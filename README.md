@@ -16,7 +16,7 @@ Simple PHP object caching base on temp file
 
 #### Quick start
 ```PHP
-use JC\SimpleCache;
+use JC\Cache\SimpleCache;
 
 // store your object
 SimpleCache::add('your-key', new Person('Jared', 27));
