@@ -7,6 +7,7 @@ Simple PHP object caching base on temp file
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/jaredchu/Simple-Cache.svg)](https://scrutinizer-ci.com/g/jaredchu/Simple-Cache/)
 [![Codecov](https://img.shields.io/codecov/c/github/jaredchu/Simple-Cache.svg)](https://codecov.io/gh/jaredchu/simple-cache)
 [![Packagist](https://img.shields.io/packagist/l/jaredchu/simple-cache.svg)](https://packagist.org/packages/jaredchu/simple-cache)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fjaredchu%2FSimple-Cache.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fjaredchu%2FSimple-Cache?ref=badge_shield)
 
 ## Installation
 `$ composer require jaredchu/simple-cache`
@@ -66,3 +67,6 @@ $person = SimpleCache::fetch('your-key', Person::class);
 
 ## License
 [MIT License](https://github.com/jaredchu/Simple-Cache/blob/master/LICENSE)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fjaredchu%2FSimple-Cache.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fjaredchu%2FSimple-Cache?ref=badge_large)
