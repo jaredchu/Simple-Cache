@@ -32,20 +32,36 @@ class BaseCache
     /**
      * @param $key
      * @param string $className
-     * @return object|bool
+     * @return object|mixed|bool
      *
-     * Fetch object from cache
+     * Fetch data from cache
      */
-    public static function fetch($key, $className)
+    public static function fetch($key, $className = '', $isArray = false)
     {
         if (Manager::has($key)) {
             $dataString = file_get_contents(static::getTempFile($key));
+            $rawData = static::decode($dataString);
 
-            $mapper = new JCMapper();
-            return $mapper->map(static::decode($dataString), (new ReflectionClass($className))->newInstanceWithoutConstructor());
+            if (!empty($className)) {
+                $mapper = new JCMapper();
+                return $mapper->map($rawData, (new ReflectionClass($className))->newInstanceWithoutConstructor());
+            } else {
+                return $isArray ? (array)$rawData : $rawData;
+            }
         }
 
         return false;
+    }
+
+    /**
+     * @param $key
+     * @return array
+     *
+     * Fetch array from cache
+     */
+    public static function fetchArray($key)
+    {
+        return static::fetch($key, '', true);
     }
 
     /**

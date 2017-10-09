@@ -10,8 +10,14 @@ use JC\Cache\BaseCache;
 
 class BaseCacheTest extends PHPUnit_Framework_TestCase
 {
-    public static $key;
+    public static $dataString;
+    public static $dataInt;
+    public static $dataFloat;
+    public static $dataBool;
+    public static $dataNull;
+    public static $dataArray;
 
+    public static $personKey;
     /**
      * @var Person
      */
@@ -19,20 +25,33 @@ class BaseCacheTest extends PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        self::$key = 'mr.chu';
+        self::$personKey = 'mr.chu';
         self::$person = new Person('Jared', 27);
+
+        self::$dataString = ['keyString', 'Hello World!'];
+        self::$dataInt = ['keyInt', 123456];
+        self::$dataFloat = ['keyFloat', 123.456];
+        self::$dataBool = ['keyBool', false];
+        self::$dataNull = ['keyNull', null];
+        self::$dataArray = ['keyArray', [
+            'foo' => 'bar',
+            'number' => 1,
+            'array' => [
+                'a', 'b', 'c'
+            ]
+        ]];
     }
 
     public function testAdd()
     {
-        self::assertTrue(BaseCache::add(self::$key, self::$person));
+        self::assertTrue(BaseCache::add(self::$personKey, self::$person));
     }
 
     public function testExists()
     {
         $otherKey = 'mr.trump';
 
-        self::assertTrue(BaseCache::exists(self::$key));
+        self::assertTrue(BaseCache::exists(self::$personKey));
         self::assertFalse(BaseCache::exists($otherKey));
 
         self::assertTrue(BaseCache::add($otherKey, new Person('Donald', 70)));
@@ -43,7 +62,7 @@ class BaseCacheTest extends PHPUnit_Framework_TestCase
 
     public function testFetch()
     {
-        $jared = BaseCache::fetch(self::$key, Person::class);
+        $jared = BaseCache::fetch(self::$personKey, Person::class);
         self::assertEquals(self::$person->name, $jared->name);
         self::assertEquals(self::$person->age, $jared->age);
         self::assertEquals(self::$person->sayHi(), $jared->sayHi());
@@ -53,8 +72,8 @@ class BaseCacheTest extends PHPUnit_Framework_TestCase
 
     public function testRemove()
     {
-        self::assertTrue(BaseCache::remove(self::$key));
-        self::assertFalse(BaseCache::exists(self::$key));
+        self::assertTrue(BaseCache::remove(self::$personKey));
+        self::assertFalse(BaseCache::exists(self::$personKey));
 
         self::assertFalse(BaseCache::remove('xxx'));
     }
@@ -101,6 +120,28 @@ class BaseCacheTest extends PHPUnit_Framework_TestCase
         self::assertEquals($employee->person->sayHi(), $fetchEmployee->person->sayHi());
 
         self::assertTrue(BaseCache::remove($eKey));
+    }
+
+    public function testStoreVariousValue()
+    {
+        self::storeData(self::$dataString[0], self::$dataString[1]);
+        self::storeData(self::$dataInt[0], self::$dataInt[1]);
+        self::storeData(self::$dataFloat[0], self::$dataFloat[1]);
+        self::storeData(self::$dataBool[0], self::$dataBool[1]);
+        self::storeData(self::$dataNull[0], self::$dataNull[1]);
+        self::storeData(self::$dataArray[0], self::$dataArray[1]);
+    }
+
+    private function storeData($key, $data)
+    {
+        self::assertTrue(BaseCache::add($key, $data));
+        self::assertTrue(BaseCache::exists($key));
+        if (is_array($data)) {
+            self::assertEquals($data, BaseCache::fetchArray($key));
+        } else {
+            self::assertEquals($data, BaseCache::fetch($key));
+        }
+        self::assertTrue(BaseCache::remove($key));
     }
 }
 
