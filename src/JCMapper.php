@@ -16,14 +16,7 @@ class JCMapper extends JsonMapper
         $class, $useParameter = false, $parameter = null
     )
     {
-        if (isset($this->classMap[$class])) {
-            $class = $this->classMap[$class];
-        }
-        if ($useParameter) {
-            return new $class($parameter);
-        } else {
-            return (new \ReflectionClass($class))->newInstanceWithoutConstructor();
-        }
+        return (new \ReflectionClass($class))->newInstanceWithoutConstructor();
     }
 
 }
