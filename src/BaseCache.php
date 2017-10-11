@@ -32,6 +32,7 @@ class BaseCache
     /**
      * @param $key
      * @param string $className
+     * @param bool $isArray
      * @return object|mixed|bool
      *
      * Fetch data from cache
