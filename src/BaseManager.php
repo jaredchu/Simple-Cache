@@ -35,7 +35,7 @@ abstract class BaseManager
      */
     public static function getCFileName()
     {
-        return static::$cFileName ?: static::getUniqueString();
+        return static::$cFileName;
     }
 
     /**

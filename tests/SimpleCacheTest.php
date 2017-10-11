@@ -41,4 +41,12 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
         self::assertTrue(SimpleCache::remove(self::$key));
         self::assertFalse(SimpleCache::fetch('xxx', Person::class));
     }
+
+    public function testEncryptionKey()
+    {
+        $encrytionKey = 'encrytionKey';
+        SimpleCache::setEncryptKey($encrytionKey);
+        self::assertEquals($encrytionKey, SimpleCache::getEncryptKey());
+        self::assertTrue(SimpleCache::add('test', 'test'));
+    }
 }

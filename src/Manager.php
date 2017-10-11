@@ -26,7 +26,7 @@ class Manager extends BaseManager
      */
     public static function getCFileName()
     {
-        return self::$cFileName ?: self::getUniqueString(is_null(self::$encryptKey) ? 'encrypt' : self::$encryptKey);
+        return parent::getCFileName() ?: self::getUniqueString(is_null(self::$encryptKey) ? 'encrypt' : self::$encryptKey);
     }
 
     /**
@@ -77,7 +77,7 @@ class Manager extends BaseManager
      */
     protected static function encode($array)
     {
-        return self::encrypt(json_encode($array));
+        return self::encrypt(parent::encode($array));
     }
 
     /**
@@ -86,7 +86,7 @@ class Manager extends BaseManager
      */
     protected static function decode($string)
     {
-        return json_decode(self::decrypt($string), true);
+        return parent::decode(self::decrypt($string));
     }
 
 }
