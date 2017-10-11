@@ -13,9 +13,12 @@ class ManagerTest extends PHPUnit_Framework_TestCase
 {
     public function testSetCFileName()
     {
-        BaseCache::add('test', new stdClass());
-        BaseCache::remove('test');
+        $cacheFileName = 'cache-list';
+        Manager::setCFileName($cacheFileName);
+        self::assertEquals($cacheFileName, Manager::getCFileName());
 
+        self::assertTrue(BaseCache::add('test', new stdClass()));
+        self::assertTrue(BaseCache::remove('test'));
         self::assertTrue(file_exists(Manager::getCFilePath()));
     }
 

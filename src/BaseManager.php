@@ -124,7 +124,11 @@ abstract class BaseManager
     public static function has($key)
     {
         $cacheList = static::getCacheList();
-        return array_key_exists($key, $cacheList);
+        if (is_array($cacheList)) {
+            return array_key_exists($key, $cacheList);
+        }
+
+        return false;
     }
 
     /**
