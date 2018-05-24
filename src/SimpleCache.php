@@ -31,6 +31,14 @@ class SimpleCache extends BaseCache
     }
 
     /**
+     * @param string $cacheDirectory
+     */
+    public static function setCacheDirectory($cacheDirectory) {
+        self::$cacheDirectory = $cacheDirectory;
+        Manager::setCacheDirectory($cacheDirectory);
+    }
+
+    /**
      * @param object $object
      * @return string
      */
