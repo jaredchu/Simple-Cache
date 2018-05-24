@@ -27,6 +27,7 @@ class SimpleCacheTest extends PHPUnit_Framework_TestCase
 
     public function testAdd()
     {
+        SimpleCache::setCacheDirectory('/Users/arsalan/code/clipman/cache');
         SimpleCache::setEncryptKey(self::$encryptKey);
         self::assertTrue(SimpleCache::add(self::$key, self::$person));
     }

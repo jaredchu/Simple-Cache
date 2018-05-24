@@ -17,6 +17,11 @@ use ReflectionClass;
 class BaseCache
 {
     /**
+     * @var string
+     */
+    protected static $cacheDirectory;
+    
+    /**
      * @param $key
      * @param $data
      * @return bool
@@ -111,7 +116,8 @@ class BaseCache
      */
     protected static function createTempFile($key, $ttl)
     {
-        $tempFilePath = tempnam(sys_get_temp_dir(), $key);
+        $cacheDirectory = empty(self::$cacheDirectory) ? sys_get_temp_dir() : self::$cacheDirectory;
+        $tempFilePath = tempnam($cacheDirectory, $key);
         Manager::set($key, $tempFilePath, $ttl);
 
         return $tempFilePath;

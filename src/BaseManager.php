@@ -23,6 +23,18 @@ abstract class BaseManager
     protected static $cFileName;
 
     /**
+     * @var string
+     */
+    protected static $cacheDirectory;
+
+    /**
+     * @param string $cacheDirectory
+     */
+    public static function setCacheDirectory($cacheDirectory) {
+        self::$cacheDirectory = $cacheDirectory;
+    }
+
+    /**
      * @param $cFileName
      */
     public static function setCFileName($cFileName)
@@ -45,7 +57,8 @@ abstract class BaseManager
      */
     public static function getCFilePath()
     {
-        return sys_get_temp_dir() . '/' . static::getCFileName();
+        $cacheDirectory = empty(self::$cacheDirectory) ? sys_get_temp_dir() : self::$cacheDirectory;
+        return $cacheDirectory . '/' . static::getCFileName();
     }
 
     /**
